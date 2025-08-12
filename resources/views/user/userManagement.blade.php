@@ -208,7 +208,8 @@
                                             <label for="" class="form-label">Role</label>
                                             <select name="role" id="role" class="form-select">
                                                 <option value="Admin">Admin</option>
-                                                <option value="Data_Entry_Operator">Data Entry Operator</option>
+                                                <option value="Manager">Manager</option>
+                                                <option value="Sales">Sales</option>
                                             </select>
                                         </div>
 
@@ -308,12 +309,12 @@
         <script>
              document.addEventListener('DOMContentLoaded', function () {
                     // List of forms to handle
-                    const forms = ['addUserForm']; 
+                    const forms = ['addUserForm'];
               // Error messages
               const errors = {
-                     
+
                         contact: 'Contact Number is required in the correct Sri Lankan format.',
-                       
+
                     };
             forms.forEach((formId) => {
                 const form = document.getElementById(formId);

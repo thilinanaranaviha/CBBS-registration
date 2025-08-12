@@ -12,7 +12,7 @@
         <head>
 
             @include('Layout.appStyles')
-            <title>Admin | CBBS | Data Import</title>
+            <title>Admin | CBBS | Student Registration </title>
 
             <style>
                 .custom-select {
@@ -84,7 +84,8 @@
                             <div class="card shadow-sm">
                                 <div class="card-header"
                                     style="background-color: #1d3557; color: #f1faee; font-family: 'Poppins', sans-serif;">
-                                    <h4 class="mb-0" style="font-weight: 600; color: #f1faee;">Student Registration Form</h4>
+                                    <h4 class="mb-0" style="font-weight: 600; color: #f1faee;">Student Registration
+                                        Form</h4>
                                 </div>
 
                                 <div class="card-body">
@@ -173,37 +174,43 @@
                                             <div class="col-md-4">
                                                 <label for="course_id" class="form-label">Course <span
                                                         class="text-danger">*</span></label>
-                                                <select name="course_id" class="form-select" required>
+                                                <select name="course_id" class="form-select">
                                                     <option value="" disabled selected>-- Select Course --
                                                     </option>
-                                                    @foreach ($course as $c)
-                                                        <option value="{{ $c->course_id }}">{{ $c->course_name }}
-                                                        </option>
+                                                    @if (!empty($course))
+                                                    @foreach ($course as $item)
+                                                        <option value="{{ $item->course_id }}">
+                                                            {{ $item->course_name }}</option>
                                                     @endforeach
+                                                @endif
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="branch_id" class="form-label">Branch <span
                                                         class="text-danger">*</span></label>
-                                                <select name="branch_id" class="form-select" required>
+                                                <select name="branch_id" class="form-select">
                                                     <option value="" disabled selected>-- Select Branch --
                                                     </option>
-                                                    @foreach ($branch as $b)
-                                                        <option value="{{ $b->branch_id }}">{{ $b->branch_name }}
-                                                        </option>
+                                                    @if (!empty($branch))
+                                                    @foreach ($branch as $item)
+                                                        <option value="{{ $item->branch_id }}">
+                                                            {{ $item->branch_name }}</option>
                                                     @endforeach
+                                                @endif
                                                 </select>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="batch_id" class="form-label">Batch <span
                                                         class="text-danger">*</span></label>
-                                                <select name="batch_id" class="form-select" required>
+                                                <select name="batch_id" class="form-select">
                                                     <option value="" disabled selected>-- Select Batch --
                                                     </option>
-                                                    @foreach ($batch as $b)
-                                                        <option value="{{ $b->batch_id }}">{{ $b->batch_no }}
+                                                    @if (!empty($batch))
+                                                    @foreach ($batch as $item)
+                                                        <option value="{{ $item->batch_id }}">{{ $item->batch_no }}
                                                         </option>
                                                     @endforeach
+                                                @endif
                                                 </select>
                                             </div>
                                         </div>
@@ -214,6 +221,15 @@
                                         </div>
 
                                     </form>
+                                    @if ($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul class="mb-0">
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+                                    @endif
                                 </div>
                             </div>
                         </div>

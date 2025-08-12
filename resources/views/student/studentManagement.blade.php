@@ -62,7 +62,7 @@
                             </div>
                             <!-- end page title -->
 
-                            <div class="row">
+                            {{-- <div class="row">
                                 <div class="col-md-3">
                                     <button class="btn btn-primary waves-effect waves-light" data-bs-toggle="modal"
                                         data-bs-target="#customerAddModal">Add Student</button>
@@ -70,7 +70,7 @@
 
                                 </div>
 
-                            </div>
+                            </div> --}}
 
                             <br>
                             @if (session()->has('message'))
@@ -115,71 +115,53 @@
 
                                                     <thead>
                                                         <tr>
-
-                                                            <th>Student Id</th>
-                                                            <th>Student Name</th>
+                                                            <th>Student ID</th>
+                                                            <th>Name</th>
                                                             <th>NIC</th>
                                                             <th>Email</th>
                                                             <th>Gender</th>
-                                                            <th>Contact Number</th>
-                                                            <th>Whatsapp Number</th>
-                                                            <th>Address</th>
-                                                            <th>Branch</th>
-                                                            <th>Course</th>
-                                                            <th>Batch</th>
-                                                            <th>isFastTack</th>
-                                                            <th>Actions</th>
+                                                            <th>Mobile</th>
+                                                            <th>Whatsapp</th>
+                                                            <th>Contact Address</th>
+                                                            <th>Batch ID</th>
+                                                            <th>Is Fast Track</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
-
                                                     <tbody>
-                                                        @if (!empty($data))
-                                                            @foreach ($data as $item)
-                                                                <tr>
-                                                                    <td>{{ $item->student_id }}</td>
-                                                                    <td>{{ $item->name }}</td>
-                                                                    <td>{{ $item->nic }}</td>
-                                                                    <td>{{ $item->email }}</td>
-                                                                    <td>{{ $item->gender }}</td>
-                                                                    <td>{{ $item->contact_number }}</td>
-                                                                    <td>{{ $item->whatsapp_number }}</td>
-                                                                    <td>{{ $item->address }}</td>
-                                                                    <td>{{ $item->branch_name }}</td>
-                                                                    <td>{{ $item->course_name }}</td>
-                                                                    <td>{{ $item->batch_no }}</td>
-                                                                    <td>{{ $item->isFastTrack }}</td>
-
-
-                                                                    <td>
-
-
-                                                                        <button
-                                                                            class="btn btn-outline-info  btn-sm waves-effect waves-light"
-                                                                            data-bs-toggle="modal"
-                                                                            data-bs-target="#studentEditModal"
-
-                                                                            data-studentid="{{ $item->student_id }}"
-                                                                            data-name="{{ $item->name }}"
-                                                                            data-nic="{{ $item->nic }}"
-                                                                            data-email="{{ $item->email }}"
-                                                                            data-gender="{{ $item->gender }}"
-                                                                            data-contactnumber="{{ $item->contact_number }}"
-                                                                            data-whatsappnumber="{{ $item->whatsapp_number }}"
-                                                                            data-address="{{ $item->address }}"
-                                                                            data-branchid="{{ $item->branch_id }}"
-                                                                            data-courseid="{{ $item->course_id }}"
-                                                                            data-batchid="{{ $item->batch_id }}">Edit</button>
-
-
-                                                                        <a href="{{ url('/deleteStudent') . $item->id }}"
-                                                                            class="btn btn-outline-danger btn-sm waves-effect waves-light">Delete</a>
-
-                                                                    </td>
-
-
-                                                                </tr>
-                                                            @endforeach
-                                                        @endif
+                                                        @foreach ($data as $item)
+                                                            <tr>
+                                                                <td>{{ $item->student_id }}</td>
+                                                                <td>{{ $item->name }}</td>
+                                                                <td>{{ $item->nic_number }}</td>
+                                                                <td>{{ $item->email }}</td>
+                                                                <td>{{ $item->gender }}</td>
+                                                                <td>{{ $item->mobile }}</td>
+                                                                <td>{{ $item->whatsapp }}</td>
+                                                                <td>{{ $item->contact_address }}</td>
+                                                                <td>{{ $item->batch_no }}</td>
+                                                                <td>{{ $item->isFastTrack }}</td>
+                                                                <td>
+                                                                    <button
+                                                                        class="btn btn-outline-info btn-sm waves-effect waves-light"
+                                                                        data-bs-toggle="modal"
+                                                                        data-bs-target="#studentEditModal"
+                                                                        data-studentid="{{ $item->student_id }}"
+                                                                        data-name="{{ $item->name }}"
+                                                                        data-nic="{{ $item->nic_number }}"
+                                                                        data-email="{{ $item->email }}"
+                                                                        data-gender="{{ $item->gender }}"
+                                                                        data-contactnumber="{{ $item->mobile }}"
+                                                                        data-whatsappnumber="{{ $item->whatsapp }}"
+                                                                        data-address="{{ $item->contact_address }}"
+                                                                        data-batchid="{{ $item->batch_id }}"
+                                                                        >Edit</button>
+                                                                    <a href="{{ url('/deleteStudent/' . $item->id) }}"
+                                                                        class="btn btn-outline-danger btn-sm waves-effect waves-light"
+                                                                        onclick="return confirm('Are you sure you want to delete this student?')">Delete</a>
+                                                                </td>
+                                                            </tr>
+                                                        @endforeach
                                                     </tbody>
                                                 </table>
                                             </div>
@@ -334,6 +316,15 @@
                                         </div>
 
                                     </form>
+                                    @if ($errors->any())
+  <div class="alert alert-danger">
+    <ul class="mb-0">
+      @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+      @endforeach
+    </ul>
+  </div>
+@endif
                                 </div>
                             </div>
                         </div>
@@ -341,40 +332,48 @@
                     {{--        End student add model --}}
 
                     {{--        Start student edit model --}}
-                    <div id="studentEditModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="studentEditModal" aria-hidden="true">
+                    <div id="studentEditModal" class="modal fade" tabindex="-1" role="dialog"
+                        aria-labelledby="studentEditModal" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <h5 class="modal-title mt-0" id="myModalLabel">Edit Student</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form id="editStudentForm" action="{{ url('editStudent') }}" method="post" enctype="multipart/form-data">
+                                    <form id="editStudentForm" action="{{ url('editStudent') }}" method="post"
+                                        enctype="multipart/form-data">
                                         {{ csrf_field() }}
-                                        <input type="text" class="form-control" id="student_id" name="student_id" hidden>
+                                        <input type="text" class="form-control" id="student_id" name="student_id"
+                                            hidden>
 
                                         <!-- Form Fields -->
                                         <div class="mb-3">
                                             <label for="student_id" class="form-label">Student Id</label>
-                                            <input type="text" class="form-control" id="edit_student_id" name="student_id" readonly>
+                                            <input type="text" class="form-control" id="edit_student_id"
+                                                name="student_id" readonly>
                                             <span class="error text-danger small" id="edit_student_id_error"></span>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="name" class="form-label">Student Name</label>
-                                            <input type="text" class="form-control" id="edit_name" name="name" required>
+                                            <input type="text" class="form-control" id="edit_name" name="name"
+                                                required>
                                             <span class="error text-danger small" id="edit_name_error"></span>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="nic" class="form-label">NIC</label>
-                                            <input type="text" class="form-control" id="edit_nic" name="nic" required>
+                                            <input type="text" class="form-control" id="edit_nic" name="nic"
+                                                required>
                                             <span class="error text-danger small" id="edit_nic_error"></span>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="email" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="edit_email" name="email" required>
+                                            <input type="email" class="form-control" id="edit_email"
+                                                name="email" required>
                                             <span class="error text-danger small" id="edit_email_error"></span>
                                         </div>
 
@@ -390,29 +389,36 @@
 
                                         <div class="mb-3">
                                             <label for="contact_number" class="form-label">Contact Number</label>
-                                            <input type="text" class="form-control" id="edit_contact_number" name="contact_number" required>
-                                            <span class="error text-danger small" id="edit_contact_number_error"></span>
+                                            <input type="text" class="form-control" id="edit_contact_number"
+                                                name="contact_number" required>
+                                            <span class="error text-danger small"
+                                                id="edit_contact_number_error"></span>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="whatsapp_number" class="form-label">Whatsapp Number</label>
-                                            <input type="text" class="form-control" id="edit_whatsapp_number" name="whatsapp_number" required>
-                                            <span class="error text-danger small" id="edit_whatsapp_number_error"></span>
+                                            <input type="text" class="form-control" id="edit_whatsapp_number"
+                                                name="whatsapp_number" required>
+                                            <span class="error text-danger small"
+                                                id="edit_whatsapp_number_error"></span>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="address" class="form-label">Address</label>
-                                            <input type="text" class="form-control" id="edit_address" name="address" required>
+                                            <input type="text" class="form-control" id="edit_address"
+                                                name="address" required>
                                             <span class="error text-danger small" id="edit_address_error"></span>
                                         </div>
 
                                         <div class="mb-3">
                                             <label for="branch_id" class="form-label">Branch Name</label>
-                                            <select id="edit_branch_id" name="branch_id" class="form-control input-sm">
+                                            <select id="edit_branch_id" name="branch_id"
+                                                class="form-control input-sm">
                                                 <option value="" disabled selected> -- Select Branch -- </option>
                                                 @if (!empty($branch))
                                                     @foreach ($branch as $item)
-                                                        <option value="{{ $item->branch_id }}">{{ $item->branch_name }}</option>
+                                                        <option value="{{ $item->branch_id }}">
+                                                            {{ $item->branch_name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -421,11 +427,13 @@
 
                                         <div class="mb-3">
                                             <label for="course_id" class="form-label">Course Name</label>
-                                            <select id="edit_course_id" name="course_id" class="form-control input-sm">
+                                            <select id="edit_course_id" name="course_id"
+                                                class="form-control input-sm">
                                                 <option value="" disabled selected> -- Select Course -- </option>
                                                 @if (!empty($course))
                                                     @foreach ($course as $item)
-                                                        <option value="{{ $item->course_id }}">{{ $item->course_name }}</option>
+                                                        <option value="{{ $item->course_id }}">
+                                                            {{ $item->course_name }}</option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -438,7 +446,8 @@
                                                 <option value="" disabled selected> -- Select Batch -- </option>
                                                 @if (!empty($batch))
                                                     @foreach ($batch as $item)
-                                                        <option value="{{ $item->batch_id }}">{{ $item->batch_no }}</option>
+                                                        <option value="{{ $item->batch_id }}">{{ $item->batch_no }}
+                                                        </option>
                                                     @endforeach
                                                 @endif
                                             </select>
@@ -446,8 +455,11 @@
                                         </div>
 
                                         <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary waves-effect waves-light">Save</button>
-                                            <button type="button" class="btn btn-outline-danger waves-effect waves-light" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit"
+                                                class="btn btn-primary waves-effect waves-light">Save</button>
+                                            <button type="button"
+                                                class="btn btn-outline-danger waves-effect waves-light"
+                                                data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </form>
                                 </div>
@@ -510,7 +522,7 @@
             </script>
 
             <script>
-                document.addEventListener('DOMContentLoaded', function () {
+                document.addEventListener('DOMContentLoaded', function() {
                     // List of forms to handle
                     const forms = ['addStudentForm', 'editStudentForm'];
 
@@ -568,7 +580,8 @@
                                 } else if (field.id.endsWith('nic') && !validateNIC(field.value)) {
                                     errorElement.textContent = errors[field.id];
                                     field.classList.add('is-invalid');
-                                } else if ((field.id.endsWith('contact_number') || field.id.endsWith('whatsapp_number')) && !validateSriLankanPhone(field.value)) {
+                                } else if ((field.id.endsWith('contact_number') || field.id.endsWith(
+                                        'whatsapp_number')) && !validateSriLankanPhone(field.value)) {
                                     errorElement.textContent = errors[field.id];
                                     field.classList.add('is-invalid');
                                 } else if (field.id.endsWith('student_id') && !validateStudentID(field.value)) {
@@ -597,7 +610,8 @@
                                 const oldNicPattern = /^[0-9]{9}[vVxX]$/; // Old NIC format
                                 const newNicPattern = /^[0-9]{12}$/; // New NIC format
                                 const passportPattern = /^[A-Z0-9]{8,10}$/; // Passport format
-                                return oldNicPattern.test(nic) || newNicPattern.test(nic) || passportPattern.test(nic);
+                                return oldNicPattern.test(nic) || newNicPattern.test(nic) || passportPattern.test(
+                                    nic);
                             }
 
                             // Phone validation
@@ -609,7 +623,8 @@
 
                             // Student ID validation
                             function validateStudentID(student_id) {
-                                const studentIDPattern = /^[A-Z]+\/[A-Z]+\/\d{2,}\/\d{2,}$/; // Allows formats like MBC/CW/44/01 or BMMC/CW/44/123
+                                const studentIDPattern =
+                                    /^[A-Z]+\/[A-Z]+\/\d{2,}\/\d{2,}$/; // Allows formats like MBC/CW/44/01 or BMMC/CW/44/123
                                 return studentIDPattern.test(student_id);
                             }
                         }
