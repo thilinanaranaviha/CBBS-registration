@@ -120,7 +120,7 @@
             <h1 class="h4 pane-title">Colombo Bartender &amp; Barista School</h1>
             <div class="pane-sub mb-3">Admissions &amp; Registration</div>
 
-            <a href="{{ $companyWebsite ?? 'https://barbaristaschool.com/' }}" target="_blank" rel="noopener"
+            <a href="{{ $companyWebsite ?? 'https://example.com' }}" target="_blank" rel="noopener"
                class="btn visit-btn btn-lg px-4 rounded-pill shadow-sm">
               Visit Website
             </a>
@@ -133,9 +133,7 @@
                 <h6 class="fw-bold text-white-50 mb-2">Locations</h6>
                 <div class="small mb-3">No. 15B 1/2, Alfred Place, Colombo 03.<br>077 202 8750</div>
                 <div class="small mb-3">No. 67, Walukarama Road, Colombo 03.<br>077 718 0275</div>
-                <div class="small mb-3">No: 446/5, Peradeniya Road, Kandy.<br>074 394 2648</div>
-                <div class="small mb-3">No. 61A, Rajapihilla Mawatha, Kurunegala.<br>076 663 0721</div>
-                
+                <div class="small">No: 446/5, Peradeniya Road, Kandy.<br>074 394 2648</div>
               </div>
               <div class="col-12 col-md-6">
                 <h6 class="fw-bold text-white-50 mb-2">Contact</h6>
@@ -156,10 +154,9 @@
       <section class="col-12 col-lg-7 d-flex align-items-start justify-content-center">
         <div class="container py-4 py-lg-5 form-wrap">
           <div class="card card-modern">
-            <div class="card-header" style="background:linear-gradient(110deg,#1b2b44 0%,#2d5373 55%,#4e86a6 100%);
-                        color:#fff;border-top-left-radius:1rem;border-top-right-radius:1rem;">
-                <h4 class="mb-1">Student Registration Form</h4>
-                <div class="small opacity-75">Please complete all required fields</div>
+            <div class="card-header">
+              <h4 class="mb-1">Student Registration Form</h4>
+              <div class="small opacity-75">Please complete all required fields</div>
             </div>
 
             <div class="card-body">
@@ -207,9 +204,9 @@
                       <label for="gender" class="form-label required">Gender</label>
                       <select name="gender" id="gender" class="form-select" required>
                         <option value="" disabled {{ old('gender') ? '' : 'selected' }}>-- Select --</option>
-                        <option {{ old('gender') === 'Male' ? 'selected' : '' }}>Male</option>
-                        <option {{ old('gender') === 'Female' ? 'selected' : '' }}>Female</option>
-                        <option {{ old('gender') === 'Other' ? 'selected' : '' }}>Other</option>
+                        <option {{ old('gender')==='Male'?'selected':'' }}>Male</option>
+                        <option {{ old('gender')==='Female'?'selected':'' }}>Female</option>
+                        <option {{ old('gender')==='Other'?'selected':'' }}>Other</option>
                       </select>
                     </div>
                   </div>
@@ -220,14 +217,14 @@
                   <h6 class="section-title">Contact</h6>
                   <div class="row g-3">
                     <div class="col-12 col-md-4">
-                      <label for="mobile" class="form-label required" >Mobile Number</label>
-                      <input type="text" name="mobile" id="mobile" class="form-control" required
+                      <label for="mobile" class="form-label">Mobile Number</label>
+                      <input type="text" name="mobile" id="mobile" class="form-control"
                              placeholder="+9471XXXXXXX or 071XXXXXXX"
                              pattern="^(?:\+94|0)?7\d{8}$" value="{{ old('mobile') }}">
                     </div>
                     <div class="col-12 col-md-4">
-                      <label for="whatsapp" class="form-label required">WhatsApp Number</label>
-                      <input type="text" name="whatsapp" id="whatsapp" class="form-control"required
+                      <label for="whatsapp" class="form-label">WhatsApp Number</label>
+                      <input type="text" name="whatsapp" id="whatsapp" class="form-control"
                              pattern="^(?:\+94|0)?7\d{8}$" value="{{ old('whatsapp') }}">
                       <div class="form-text"><a href="#" id="copyMobile">Same as mobile</a></div>
                     </div>
@@ -263,7 +260,7 @@
                       <select name="course_id" id="course_id" class="form-select" required>
                         <option value="" disabled {{ old('course_id') ? '' : 'selected' }}>-- Select Course --</option>
                         @foreach(($course ?? []) as $item)
-                          <option value="{{ $item->course_id }}" {{ old('course_id') == $item->course_id ? 'selected' : '' }}>
+                          <option value="{{ $item->course_id }}" {{ old('course_id')==$item->course_id ? 'selected' : '' }}>
                             {{ $item->course_name }}
                           </option>
                         @endforeach
@@ -274,7 +271,7 @@
                       <select name="branch_id" id="branch_id" class="form-select" required>
                         <option value="" disabled {{ old('branch_id') ? '' : 'selected' }}>-- Select Branch --</option>
                         @foreach(($branch ?? []) as $item)
-                          <option value="{{ $item->branch_id }}" {{ old('branch_id') == $item->branch_id ? 'selected' : '' }}>
+                          <option value="{{ $item->branch_id }}" {{ old('branch_id')==$item->branch_id ? 'selected' : '' }}>
                             {{ $item->branch_name }}
                           </option>
                         @endforeach
@@ -285,7 +282,7 @@
                       <select name="batch_id" id="batch_id" class="form-select" required>
                         <option value="" disabled {{ old('batch_id') ? '' : 'selected' }}>-- Select Batch --</option>
                         @foreach(($batch ?? []) as $item)
-                          <option value="{{ $item->batch_id }}" {{ old('batch_id') == $item->batch_id ? 'selected' : '' }}>
+                          <option value="{{ $item->batch_id }}" {{ old('batch_id')==$item->batch_id ? 'selected' : '' }}>
                             {{ $item->batch_no }}
                           </option>
                         @endforeach
@@ -355,4 +352,3 @@
   </script>
 </body>
 </html>
-
