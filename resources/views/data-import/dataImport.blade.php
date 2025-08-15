@@ -312,7 +312,8 @@
                 <h6 class="fw-bold text-white mb-2">Locations</h6>
                 <div class="small mb-3">No. 15B 1/2, Alfred Place, Colombo 03.<br>077 202 8750</div>
                 <div class="small mb-3">No. 67, Walukarama Road, Colombo 03.<br>077 718 0275</div>
-                <div class="small">No: 446/5, Peradeniya Road, Kandy.<br>074 394 2648</div>
+                <div class="small mb-3">No: 446/5, Peradeniya Road, Kandy.<br>074 394 2648</div>
+                <div class="small">No. 61A, Rajapihilla Mawatha, Kurunegala.<br>076 663 0721</div>
               </div>
               <div class="col-12 col-md-6">
                 <h6 class="fw-bold text-white mb-2">Contact</h6>
